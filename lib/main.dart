@@ -108,7 +108,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+                    shape: BoxShape.rectangle,
                   color: isSelected ? Colors.deepPurple.withOpacity(0.1) : Colors.transparent,
                 ),
                 padding: const EdgeInsets.all(8.0),
