@@ -18,6 +18,7 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
+      debugShowCheckedModeBanner: false, // Aquí se desactiva el banner de debug
       routerConfig: ref.watch(appRouterProvider),
     );
   }
