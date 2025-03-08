@@ -1,237 +1,540 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import './router/app_router/app_router.dart';
-import './router/routes/destinations.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const MyApp());
 }
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
-      title: 'Digital Wallet',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF4B1D80),
-          primary: const Color(0xFF4B1D80),
-          secondary: const Color(0xFF00DCAC),
-          background: const Color(0xFFFFFFFF),
-          surface: const Color.fromARGB(255, 255, 255, 255),
-        ),
-        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF4B1D80),
-          foregroundColor: Color(0xFFFFFFFF),
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: Color(0xFF4B1D80),
-          unselectedItemColor: Color(0xFFDED0FF),
-          backgroundColor: Colors.white, // Fondo blanco para los iconos
-        ),
-      ),
+  Widget build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routerConfig: ref.watch(appRouterProvider),
+      theme: ThemeData(primarySwatch: Colors.deepPurple, fontFamily: 'Roboto'),
+      home: const BankingHomePage(),
     );
   }
 }
 
-final appRouterProvider = Provider<GoRouter>((ref) {
-  return GoRouter(
-    initialLocation: '/',
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/wallet',
-        builder: (context, state) => const WalletScreen(),
-      ),
-      GoRoute(
-        path: '/transactions',
-        builder: (context, state) => const TransactionsScreen(),
-      ),
-      GoRoute(
-        path: '/settings',
-        builder: (context, state) => const SettingsScreen(),
-      ),
-      GoRoute(
-        path: '/inicio',
-        builder: (context, state) => const InicioScreen(),
-      ),
-    ],
-  );
-});
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class BankingHomePage extends StatefulWidget {
+  const BankingHomePage({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<BankingHomePage> createState() => _BankingHomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    InicioScreen(),
-    WalletScreen(),
-    TransactionsScreen(),
-    SettingsScreen(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+class _BankingHomePageState extends State<BankingHomePage> {
+  bool _isBalanceVisible = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      backgroundColor: Colors.grey[100],
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+                      _buildQuickTransferCard(),
+                      const SizedBox(height: 16),
+                      _buildBalanceCard(),
+                      const SizedBox(height: 16),
+                      _buildOfflinePaymentCard(),
+                      const SizedBox(height: 16),
+                      _buildActionGrid(),
+                      const SizedBox(height: 16),
+                      _buildReferralCard(),
+                      const SizedBox(height: 16),
+                      _buildMainActionButtons(),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            _buildBottomNavBar(),
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Inicio',
+    );
+  }
+
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.purple[100],
+            child: const Text(
+              'JC',
+              style: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance_wallet),
-            label: 'Wallet',
+          const SizedBox(width: 12),
+          const Text(
+            'Hola Juan',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Transactions',
+          const Text(' 👋', style: TextStyle(fontSize: 20)),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {},
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+          IconButton(
+            icon: const Icon(Icons.headset_mic_outlined),
+            onPressed: () {},
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF4B1D80),
-        unselectedItemColor: const Color(0xFFDED0FF),
-        backgroundColor: Colors.white,
-        onTap: _onItemTapped,
       ),
     );
   }
-}
 
-class InicioScreen extends StatelessWidget {
-  const InicioScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Inicio')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('Inicio Screen'),
-            SizedBox(height: 20),
-            Text('Nombre de Usuario: Usuario123'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class WalletScreen extends StatelessWidget {
-  const WalletScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Wallet')),
-      body: Center(
-        child: const Text('Wallet Screen'),
-      ),
-    );
-  }
-}
-
-class TransactionsScreen extends StatelessWidget {
-  const TransactionsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Transactions')),
-      body: Center(
-        child: Column(
+  Widget _buildQuickTransferCard() {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
           children: [
-            const Text('Transactions Screen'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Implement date filter logic here
-              },
-              child: const Text('Filtrar por fecha'),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Rápido y sin complicaciones',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Transfiere a otros bancos al instante',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            // Placeholder for the graph
             Container(
-              height: 200,
-              color: Colors.grey[300],
-              child: const Center(child: Text('Gráfico de Transacciones')),
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.purple[100],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(
+                    Icons.account_balance,
+                    color: Colors.purple[400],
+                    size: 30,
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        size: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  Widget _buildBalanceCard() {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Saldo disponible',
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text(
+                      _isBalanceVisible ? '\$ 0,00' : '\$ ****',
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        _isBalanceVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black54,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isBalanceVisible = !_isBalanceVisible;
+                        });
+                      },
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Recargar desde',
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        'PRINCIPAL ******0261',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        '+ \$10',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.double_arrow, color: Colors.deepPurple),
+                      const SizedBox(width: 8),
+                      Text(
+                        'd!',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple[700],
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildOfflinePaymentCard() {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
           children: [
-            const Text('Settings Screen'),
-            const SizedBox(height: 20),
-            const Text('Nombre de Usuario: Usuario123'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Implement change name logic here
-              },
-              child: const Text('Cambiar Nombre'),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Conoce cómo pagar sin internet',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Implement change password logic here
-              },
-              child: const Text('Cambiar Contraseña'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Implement change email logic here
-              },
-              child: const Text('Cambiar Email'),
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.deepPurple[700],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Center(
+                child: Icon(Icons.phone_android, color: Colors.white, size: 30),
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildActionGrid() {
+    final List<Map<String, dynamic>> actions = [
+      {
+        'icon': Icons.send,
+        'color': Colors.green[100],
+        'iconColor': Colors.green,
+        'title': 'Transferir',
+      },
+      {
+        'icon': Icons.account_balance_wallet,
+        'color': Colors.purple[100],
+        'iconColor': Colors.purple,
+        'title': 'Recargar',
+      },
+      {
+        'icon': Icons.payments,
+        'color': Colors.orange[100],
+        'iconColor': Colors.orange,
+        'title': 'Cobrar',
+      },
+      {
+        'icon': Icons.train,
+        'color': Colors.purple[100],
+        'iconColor': Colors.purple,
+        'title': 'Metro de Quito',
+      },
+      {
+        'icon': Icons.card_giftcard,
+        'color': Colors.blue[100],
+        'iconColor': Colors.blue,
+        'title': 'Invita y Gana',
+      },
+      {
+        'icon': Icons.person,
+        'color': Colors.purple[100],
+        'iconColor': Colors.purple,
+        'title': 'Deuna Jóvenes',
+      },
+      {
+        'icon': Icons.verified,
+        'color': Colors.purple[100],
+        'iconColor': Colors.purple,
+        'title': 'Verificar pago',
+      },
+    ];
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        childAspectRatio: 0.8,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 16,
+      ),
+      itemCount: actions.length,
+      itemBuilder: (context, index) {
+        final action = actions[index];
+        return Column(
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: action['color'],
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(action['icon'], color: action['iconColor'], size: 30),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              action['title'],
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildReferralCard() {
+    return Card(
+      elevation: 0,
+      color: Colors.purple[50],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Row(
+          children: const [
+            Text(
+              '¿Un amigo te invitó?',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(width: 8),
+            Text('Pega tu código', style: TextStyle(fontSize: 16)),
+            Spacer(),
+            Icon(Icons.chevron_right),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMainActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton.icon(
+            icon: const Icon(Icons.send),
+            label: const Text('Transferir'),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.deepPurple,
+              backgroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: Colors.deepPurple[200]!),
+              ),
+            ),
+            onPressed: () {},
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: ElevatedButton.icon(
+            icon: const Icon(Icons.qr_code),
+            label: const Text('Pagar a QR'),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.deepPurple[700],
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            onPressed: () {},
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomNavBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(Icons.home, 'Inicio', true),
+            _buildNavItem(Icons.local_offer, 'Promos', false, hasNew: true),
+            _buildNavItem(
+              Icons.account_balance_wallet,
+              'Billetera',
+              false,
+              hasNew: true,
+            ),
+            _buildNavItem(Icons.person, 'Tú', false),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(
+    IconData icon,
+    String label,
+    bool isSelected, {
+    bool hasNew = false,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Icon(icon, color: isSelected ? Colors.deepPurple : Colors.grey),
+            if (hasNew)
+              Positioned(
+                top: -5,
+                right: -5,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    'Nuevo',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: isSelected ? Colors.deepPurple : Colors.grey,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
+      ],
     );
   }
 }
