@@ -16,9 +16,25 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Digital Wallet',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF4B1D80),
+          primary: const Color(0xFF4B1D80),
+          secondary: const Color(0xFF00DCAC),
+          background: const Color(0xFFFFFFFF),
+          surface: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF4B1D80),
+          foregroundColor: Color(0xFFFFFFFF),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedItemColor: Color(0xFF4B1D80),
+          unselectedItemColor: Color(0xFFDED0FF),
+          backgroundColor: Colors.white, // Fondo blanco para los iconos
+        ),
       ),
-      debugShowCheckedModeBanner: false, // Aquí se desactiva el banner de debug
+      debugShowCheckedModeBanner: false,
       routerConfig: ref.watch(appRouterProvider),
     );
   }
@@ -102,8 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF4B1D80),
-        unselectedItemColor: Color(0xFF4B1D80).withOpacity(0.6),
+        selectedItemColor: const Color(0xFF4B1D80),
+        unselectedItemColor: const Color(0xFFDED0FF),
+        backgroundColor: Colors.white,
         onTap: _onItemTapped,
       ),
     );
@@ -118,7 +135,14 @@ class InicioScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Inicio')),
       body: Center(
-        child: const Text('Inicio Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text('Inicio Screen'),
+            SizedBox(height: 20),
+            Text('Nombre de Usuario: Usuario123'),
+          ],
+        ),
       ),
     );
   }
@@ -146,7 +170,25 @@ class TransactionsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Transactions')),
       body: Center(
-        child: const Text('Transactions Screen'),
+        child: Column(
+          children: [
+            const Text('Transactions Screen'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Implement date filter logic here
+              },
+              child: const Text('Filtrar por fecha'),
+            ),
+            const SizedBox(height: 20),
+            // Placeholder for the graph
+            Container(
+              height: 200,
+              color: Colors.grey[300],
+              child: const Center(child: Text('Gráfico de Transacciones')),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -160,7 +202,35 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
       body: Center(
-        child: const Text('Settings Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Settings Screen'),
+            const SizedBox(height: 20),
+            const Text('Nombre de Usuario: Usuario123'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Implement change name logic here
+              },
+              child: const Text('Cambiar Nombre'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Implement change password logic here
+              },
+              child: const Text('Cambiar Contraseña'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Implement change email logic here
+              },
+              child: const Text('Cambiar Email'),
+            ),
+          ],
+        ),
       ),
     );
   }
