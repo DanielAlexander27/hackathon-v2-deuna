@@ -498,6 +498,12 @@ class _BankingHomePageState extends State<BankingHomePage> {
         'iconColor': Colors.purple,
         'title': 'Verificar pago',
       },
+      {
+        'icon': Icons.edit,
+        'color': Colors.deepPurple[100],
+        'iconColor': Colors.deepPurple,
+        'title': 'Aprendizaje',
+      },
     ];
 
     return GridView.builder(
@@ -1030,96 +1036,6 @@ class ProfilePage extends StatelessWidget {
       trailing: const Icon(Icons.chevron_right),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       onTap: () {},
-    );
-  }
-}
-
-// Página para market de inversiones
-class MarketPage extends StatelessWidget {
-  const MarketPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title: const Text('Mercado de Inversiones'),
-        backgroundColor: Colors.deepPurple,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildMarketCard(
-            'Fondos de Inversión',
-            'Invierte en fondos de inversión y obtén ganancias',
-            Icons.trending_up,
-            Colors.green,
-          ),
-          const SizedBox(height: 16),
-          _buildMarketCard(
-            'Acciones',
-            'Compra y vende acciones de empresas internacionales',
-            Icons.bar_chart,
-            Colors.blue,
-          ),
-          const SizedBox(height: 16),
-          _buildMarketCard(
-            'Criptomonedas',
-            'Invierte en criptomonedas y obtén ganancias',
-            Icons.monetization_on,
-            Colors.orange,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMarketCard(
-    String title,
-    String description,
-    IconData icon,
-    Color color,
-  ) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, color: color, size: 30),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    description,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_right),
-          ],
-        ),
-      ),
     );
   }
 }
