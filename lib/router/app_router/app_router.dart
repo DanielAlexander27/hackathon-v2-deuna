@@ -50,7 +50,7 @@ GoRouter appRouter(Ref ref) {
                 path: Destinations.chatbot.path,
                 name: Destinations.chatbot.path,
                 parentNavigatorKey: rootNavigatorKey,
-                builder: (context, state) => ChatbotScreen(),
+                builder: (context, state) => ChatBotScreen(),
               ),
               GoRoute(
                 path: Destinations.futureCalculator.path,

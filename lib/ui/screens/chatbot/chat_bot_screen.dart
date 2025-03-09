@@ -9,14 +9,14 @@ import 'package:hackathon_v2_deuna/ui/styles/app_colors.dart';
 
 import 'widgets/chasium_thinking.dart';
 
-class ChatbotScreen extends ConsumerStatefulWidget {
-  const ChatbotScreen({super.key});
+class ChatBotScreen extends ConsumerStatefulWidget {
+  const ChatBotScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatbotScreenState();
 }
 
-class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
+class _ChatbotScreenState extends ConsumerState<ChatBotScreen> {
   late final TextEditingController _textController;
   late final ScrollController _scrollController;
   bool _isTyping = false;
@@ -45,7 +45,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.purple,
         foregroundColor: Colors.white,
-        title: const AppBarTitle(text: 'Chasium'),
+        title: const AppBarTitle(text: 'Cashium'),
       ),
       body: Column(
         children: [

@@ -29,7 +29,10 @@ class ChatInput extends StatelessWidget {
         left: 16,
         right: 16,
         top: 14,
-        bottom: MediaQuery.paddingOf(context).bottom,
+        bottom:
+            (MediaQuery.paddingOf(context).bottom != 0)
+                ? MediaQuery.paddingOf(context).bottom
+                : 10,
       ),
       child: Row(
         children: [

@@ -6,11 +6,10 @@ class PromotionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text(
           'Promociones',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white,),
+          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
         ),
         backgroundColor: Colors.deepPurple,
       ),
