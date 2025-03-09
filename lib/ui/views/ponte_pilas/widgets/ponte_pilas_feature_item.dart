@@ -59,7 +59,10 @@ class PontePilasFeatureItem extends StatelessWidget {
                   ),
                 ),
                 // SizedBox(width: 10),
-                IconButton(onPressed: () {}, icon: Icon(Icons.chevron_right)),
+                IconButton(
+                  onPressed: () => context.goNamed(feature.destination.path),
+                  icon: Icon(Icons.chevron_right),
+                ),
               ],
             ),
           ),

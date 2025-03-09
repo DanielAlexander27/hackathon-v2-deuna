@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar:
           _displayAppBar
               ? AppBar(
-                title: Text('Ponte Pilas', style: TextStyle(color: Colors.white)),
                 backgroundColor: AppColors.purple,
                 actions: [AssistantIcon(), SizedBox(width: 10)],
               )
@@ -81,7 +80,12 @@ class AssistantIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: const Color.fromARGB(255, 189, 152, 152).withValues(alpha: 0.1),
+      splashColor: const Color.fromARGB(
+        255,
+        189,
+        152,
+        152,
+      ).withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(100),
       onTap: () {
         context.goNamed(Destinations.chatbot.path);

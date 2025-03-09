@@ -1,7 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:hackathon_v2_deuna/ui/shared/app_bar_title.dart';
 import 'package:hackathon_v2_deuna/ui/styles/app_colors.dart';
-import 'grafico_acciones.dart';  
+import 'grafico_acciones.dart';
 
 // Modelo de Empresa
 class Empresa {
@@ -9,7 +10,11 @@ class Empresa {
   final double valorAccion;
   final List<FlSpot> historialAcciones;
 
-  Empresa({required this.nombre, required this.valorAccion, required this.historialAcciones});
+  Empresa({
+    required this.nombre,
+    required this.valorAccion,
+    required this.historialAcciones,
+  });
 }
 
 class EcuInvest extends StatelessWidget {
@@ -72,19 +77,25 @@ class EcuInvest extends StatelessWidget {
     ),
   ];
 
+  EcuInvest({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inversiones Ecuatorianas'),
-        backgroundColor: Colors.deepPurple,
+        title: AppBarTitle(text: 'Inversiones Ecuatorianas'),
+        backgroundColor: AppColors.purple,
+        foregroundColor: Colors.white,
       ),
       body: ListView.builder(
         itemCount: empresas.length,
         itemBuilder: (context, index) {
           final empresa = empresas[index];
           return ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 15.0,
+            ),
             title: Text(
               empresa.nombre,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -99,10 +110,11 @@ class EcuInvest extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GraficoAcciones(
-                    nombreEmpresa: empresa.nombre,
-                    historialAcciones: empresa.historialAcciones,
-                  ),
+                  builder:
+                      (context) => GraficoAcciones(
+                        nombreEmpresa: empresa.nombre,
+                        historialAcciones: empresa.historialAcciones,
+                      ),
                 ),
               );
             },
