@@ -71,14 +71,14 @@ class FinanceAnalysisScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Consumos por Fecha',
+                                  'Ingresos por Fecha',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                FilterFecha(),
-                                // BarChartConsume(),
+                                FilterFecha2(),
+                                // BarChartEarnings(),
                               ],
                             ),
                           ),
@@ -136,8 +136,8 @@ class FinanceAnalysisScreen extends ConsumerWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                FilterFecha2(),
-                                // BarChartEarnings(),
+                                FilterFecha(),
+                                // BarChartConsume()
                               ],
                             ),
                           )
