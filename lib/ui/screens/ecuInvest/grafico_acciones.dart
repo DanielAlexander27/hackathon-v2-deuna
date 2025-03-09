@@ -14,6 +14,9 @@ class GraficoAcciones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(text: nombreEmpresa),
@@ -21,41 +24,37 @@ class GraficoAcciones extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal, // Permite desplazamiento horizontal
+        scrollDirection: Axis.horizontal, // Permite desplazamiento horizontal si es necesario
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 400, // Define el ancho del gráfico
-                height: 250, // Define la altura del gráfico
-                child: LineChart(
-                  LineChartData(
-                    gridData: FlGridData(show: true),
-                    titlesData: FlTitlesData(show: true),
-                    borderData: FlBorderData(show: true),
-                    minX: 0,
-                    maxX: historialAcciones.length.toDouble() - 1,
-                    minY: 0,
-                    maxY: historialAcciones
-                            .map((e) => e.y)
-                            .reduce((a, b) => a > b ? a : b) +
-                        10,
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: historialAcciones,
-                        isCurved: true,
-                        color: Colors.green,
-                        belowBarData: BarAreaData(
-                          show: true,
-                          color: Colors.green.withAlpha((255 * 0.5).toInt()),
-                        ),
-                      ),
-                    ],
+          child: SizedBox(
+            width: screenWidth * 0.9, // 90% del ancho de la pantalla
+            height: screenHeight * 0.3, // 30% de la altura de la pantalla
+            child: LineChart(
+              LineChartData(
+                gridData: FlGridData(show: true),
+                titlesData: FlTitlesData(show: true),
+                borderData: FlBorderData(show: true),
+                minX: 0,
+                maxX: historialAcciones.length.toDouble() - 1,
+                minY: 0,
+                maxY: historialAcciones
+                        .map((e) => e.y)
+                        .reduce((a, b) => a > b ? a : b) +
+                    10,
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: historialAcciones,
+                    isCurved: true,
+                    color: Colors.green,
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: Colors.green.withAlpha((255 * 0.5).toInt()),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
