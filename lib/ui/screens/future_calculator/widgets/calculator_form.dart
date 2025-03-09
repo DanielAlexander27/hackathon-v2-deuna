@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon_v2_deuna/ui/shared/custom/custom_elevated_button.dart';
 
 import '../../../../providers/ui/screens/future_calculator/future_calculator_view_model.dart';
 import '../../../styles/app_colors.dart';
@@ -72,30 +73,19 @@ class _CalculatorFormState extends State<CalculatorForm> {
           ],
         ),
         SizedBox(height: 10),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.purple.withValues(alpha: 0.8),
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          onPressed: () async {
-            FocusManager.instance.primaryFocus?.unfocus();
-            await Future.delayed(Duration(milliseconds: 500));
-            widget.viewModel.calculate(
-              double.parse(intialBalanceController.text.replaceAll(',', '.')),
-              double.parse(monthlyDepositController.text.replaceAll(',', '.')),
-              double.parse(annualInterestController.text.replaceAll(',', '.')),
-              int.parse(yearsDurationController.text),
-            );
-          },
-          child: Text(
-            'Calcular',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        ),
+        CustomElevatedButton(text: 'Calcular', onPressed: _onCalculatePressed),
       ],
+    );
+  }
+
+  void _onCalculatePressed() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    await Future.delayed(Duration(milliseconds: 500));
+    widget.viewModel.calculate(
+      double.parse(intialBalanceController.text.replaceAll(',', '.')),
+      double.parse(monthlyDepositController.text.replaceAll(',', '.')),
+      double.parse(annualInterestController.text.replaceAll(',', '.')),
+      int.parse(yearsDurationController.text),
     );
   }
 }

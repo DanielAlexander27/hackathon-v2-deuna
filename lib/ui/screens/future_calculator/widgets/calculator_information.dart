@@ -22,7 +22,7 @@ class CalculatorInformation extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Puedes ahorrar', style: TextStyle(height: 0)),
+          const Text('Puedes ahorrar', style: TextStyle(height: 0)),
           Text(
             '\$${state.total.toStringAsFixed(2)}',
             style: TextStyle(
@@ -84,7 +84,7 @@ class CalculatorInformation extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             children: [
               _Indicator(color: initialBalanceColor, title: 'Balance Inicial'),
@@ -95,7 +95,7 @@ class CalculatorInformation extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           _Indicator(color: interestEarnedColor, title: 'Interés total'),
         ],
       ),

@@ -21,7 +21,7 @@ class PontePilasView extends StatelessWidget {
 
 const pontePilasFeatures = [
   PontePilasFeature(
-    title: 'Finanzas',
+    title: 'Análisis de Finanzas',
     description:
         'Analiza tus ingresos y gastos para entender de mejor manera cómo haces uso de tu dinero',
     icon: Icons.query_stats_rounded,
