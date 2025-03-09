@@ -64,6 +64,12 @@ GoRouter appRouter(Ref ref) {
                 parentNavigatorKey: rootNavigatorKey,
                 builder: (context, state) => AcademyScreen(),
               ),
+              GoRoute(
+                path: Destinations.ecuInvest.path,
+                name: Destinations.ecuInvest.path,
+                parentNavigatorKey: rootNavigatorKey,
+                builder: (context, state) => EcuInvest(),
+              ),
             ],
           ),
           GoRoute(
