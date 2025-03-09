@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/ui/screens/screens.dart';
+import 'router/app_router/app_router.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple, fontFamily: 'Roboto'),
-      home: const MainNavigationScreen(),
+      routerConfig: ref.watch(appRouterProvider),
     );
   }
 }
@@ -102,7 +105,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? Colors.deepPurple.withOpacity(0.1) : Colors.transparent,
+          color:
+              isSelected
+                  ? Colors.deepPurple.withOpacity(0.1)
+                  : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -159,4 +165,3 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 }
-
