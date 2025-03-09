@@ -4,3 +4,4 @@ export './future_calculator/future_calculator_screen.dart';
 export './academy/academy_screen.dart';
 export './finance_analysis/finance_analysis_screen.dart';
 export './ecuInvest/ecu_invest.dart';
+export './academy_module/module_screen.dart';

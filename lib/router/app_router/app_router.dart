@@ -63,6 +63,14 @@ GoRouter appRouter(Ref ref) {
                 name: Destinations.academy.path,
                 parentNavigatorKey: rootNavigatorKey,
                 builder: (context, state) => AcademyScreen(),
+                routes: [
+                  GoRoute(
+                    path: Destinations.budgetLesson.path,
+                    name: Destinations.budgetLesson.path,
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => const BudgetLessonScreen(),
+                  ),
+                ],
               ),
               GoRoute(
                 path: Destinations.financeAnalysis.path,

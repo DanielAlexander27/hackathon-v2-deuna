@@ -13,4 +13,5 @@ class Destinations {
   static const futureCalculator = DestinationRoute(path: 'future-calculator');
   static const academy = DestinationRoute(path: 'academy');
   static const ecuInvest = DestinationRoute(path: 'ecu-invest');
+  static const budgetLesson = DestinationRoute(path: 'academy_module');
 }

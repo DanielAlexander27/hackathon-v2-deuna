@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hackathon_v2_deuna/ui/styles/app_colors.dart' show AppColors;
+import 'package:hackathon_v2_deuna/ui/shared/custom/custom_elevated_button.dart';
+import 'package:hackathon_v2_deuna/router/destinations/destinations.dart';
 
 class LearningModules extends StatelessWidget {
   const LearningModules({super.key});
@@ -38,15 +41,12 @@ class LearningModules extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey, fontSize: 14),
                 ),
                 const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                  ),
-                  child: const Text(
-                    'Empieza',
-                    style: TextStyle(color: Colors.black),
-                  ),
+                CustomElevatedButton(
+                  text: "Comenzar",
+                  onPressed: () {
+                    context.goNamed(Destinations.budgetLesson.path);
+                  },
+
                 ),
               ],
             ),
