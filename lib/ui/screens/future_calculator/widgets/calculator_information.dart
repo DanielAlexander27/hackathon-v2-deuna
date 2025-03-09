@@ -24,7 +24,7 @@ class CalculatorInformation extends StatelessWidget {
         children: [
           const Text('Puedes ahorrar', style: TextStyle(height: 0)),
           Text(
-            '\$${state.total.toStringAsFixed(2)}',
+            _formatQuantity(state.total),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
