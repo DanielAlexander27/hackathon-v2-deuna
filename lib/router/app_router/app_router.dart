@@ -16,14 +16,14 @@ GoRouter appRouter(Ref ref) {
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: PrincipalDestinations.banking.path,
+    initialLocation: Destinations.pontePilas.path,
     routes: [
       ShellRoute(
         navigatorKey: shellNavigatorKey,
         builder: (context, state, child) => HomeScreen(child: child),
         routes: [
           GoRoute(
-            path: PrincipalDestinations.banking.path,
+            path: Destinations.banking.path,
             pageBuilder:
                 (context, state) => CustomTransitionPage(
                   child: const BankingView(),
@@ -31,7 +31,7 @@ GoRouter appRouter(Ref ref) {
                 ),
           ),
           GoRoute(
-            path: PrincipalDestinations.promotions.path,
+            path: Destinations.promotions.path,
             pageBuilder:
                 (context, state) => CustomTransitionPage(
                   child: const PromotionsView(),
@@ -39,7 +39,29 @@ GoRouter appRouter(Ref ref) {
                 ),
           ),
           GoRoute(
-            path: PrincipalDestinations.wallet.path,
+            path: Destinations.pontePilas.path,
+            pageBuilder:
+                (context, state) => CustomTransitionPage(
+                  child: const PontePilasView(),
+                  transitionsBuilder: (context, _, __, child) => child,
+                ),
+            routes: [
+              GoRoute(
+                path: Destinations.chatbot.path,
+                name: Destinations.chatbot.path,
+                parentNavigatorKey: rootNavigatorKey,
+                builder: (context, state) => ChatbotScreen(),
+              ),
+              GoRoute(
+                path: Destinations.futureCalculator.path,
+                name: Destinations.futureCalculator.path,
+                parentNavigatorKey: rootNavigatorKey,
+                builder: (context, state) => FutureCalculatorScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: Destinations.wallet.path,
             pageBuilder:
                 (context, state) => CustomTransitionPage(
                   child: const WalletView(),
@@ -47,7 +69,7 @@ GoRouter appRouter(Ref ref) {
                 ),
           ),
           GoRoute(
-            path: PrincipalDestinations.profile.path,
+            path: Destinations.profile.path,
             pageBuilder:
                 (context, state) => CustomTransitionPage(
                   child: const ProfileView(),
