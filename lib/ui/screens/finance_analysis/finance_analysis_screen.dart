@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hackathon_v2_deuna/providers/ui/screens/future_calculator/future_calculator_view_model.dart';
 import 'package:hackathon_v2_deuna/ui/styles/app_colors.dart';
 import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/services.dart';
 
-class FinanceAnalysisScreen extends ConsumerWidget {
+class FinanceAnalysisScreen extends StatelessWidget {
   const FinanceAnalysisScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.read(futureCalculatorViewModelProvider.notifier);
-    final state = ref.watch(futureCalculatorViewModelProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: AppColors.purple,
         foregroundColor: Colors.white,
         title: Text(
-          'Cuida tus finanzas',
+          'Análisis de Finanzas',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
@@ -124,7 +120,8 @@ class FinanceAnalysisScreen extends ConsumerWidget {
                             ),
                           ),
                           SizedBox(height: 8),
-                          StatusConsume(),                  Padding(
+                          StatusConsume(),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +137,7 @@ class FinanceAnalysisScreen extends ConsumerWidget {
                                 // BarChartConsume()
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -184,7 +181,6 @@ class FilterFecha extends ConsumerWidget {
     );
   }
 }
-
 
 class ConsumeData {
   final String category;
@@ -486,8 +482,6 @@ final userDataEarningsProvider = FutureProvider<List<EarningsData>>((
   return data.map((json) => EarningsData.fromJson(json)).toList();
 });
 
-
-
 final dateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
 
 class BarChartConsume extends ConsumerWidget {
@@ -560,6 +554,7 @@ class BarChartConsume extends ConsumerWidget {
     }).toList();
   }
 }
+
 class FilterFecha2 extends ConsumerWidget {
   const FilterFecha2({Key? key}) : super(key: key);
 
