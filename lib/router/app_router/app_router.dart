@@ -58,6 +58,12 @@ GoRouter appRouter(Ref ref) {
                 parentNavigatorKey: rootNavigatorKey,
                 builder: (context, state) => FutureCalculatorScreen(),
               ),
+              GoRoute(
+                path: Destinations.academy.path,
+                name: Destinations.academy.path,
+                parentNavigatorKey: rootNavigatorKey,
+                builder: (context, state) => AcademyScreen(),
+              ),
             ],
           ),
           GoRoute(
