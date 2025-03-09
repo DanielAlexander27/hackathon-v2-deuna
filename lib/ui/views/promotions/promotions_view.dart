@@ -10,7 +10,7 @@ class PromotionsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Promociones',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white,),
         ),
         backgroundColor: Colors.deepPurple,
       ),

@@ -18,7 +18,8 @@ class PontePilasFeatureItem extends StatelessWidget {
         onTap: () => context.goNamed(feature.destination.path),
         child: Ink(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.black.withValues(alpha: 0.25)),
+            color: Color.fromRGBO(251, 251, 251, 1),
+            border: Border.all(color: Colors.black.withValues(alpha: 0.20)),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
