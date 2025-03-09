@@ -16,7 +16,7 @@ class ChatBotViewModel extends _$ChatBotViewModel {
     return ChatBotUiState();
   }
 
-  void sendMessage(String input) async {
+  Future<void> sendMessage(String input) async {
     if (input.trim().isEmpty) return;
 
     // Add user message

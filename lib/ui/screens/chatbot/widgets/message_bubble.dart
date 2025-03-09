@@ -30,7 +30,7 @@ class MessageBubble extends StatelessWidget {
             isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!isUser) _buildAvatar(context),
+          if (!isUser) _Avatar(isUser: false),
           const SizedBox(width: 8),
           Flexible(
             child: Container(
@@ -57,33 +57,31 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          if (isUser) _buildAvatar(context, isUser: true),
+          if (isUser) _Avatar(isUser: true),
         ],
       ),
     );
   }
+}
 
-  Widget _buildAvatar(BuildContext context, {bool isUser = false}) {
+class _Avatar extends StatelessWidget {
+  final bool isUser;
+
+  const _Avatar({required this.isUser});
+
+  @override
+  Widget build(BuildContext context) {
     return CircleAvatar(
       radius: 16,
       backgroundColor:
           isUser
               ? Theme.of(context).colorScheme.primaryContainer
               : Theme.of(context).colorScheme.tertiaryContainer,
-      backgroundImage:
-          isUser
-              ? null // No ponemos imagen si es usuario
-              : AssetImage(
-                "assets/images/chasium_logo.jpg",
-              ), // Ruta de la imagen del bot
-      child:
-          isUser
-              ? Icon(
-                Icons.person,
-                size: 18,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              )
-              : null, // Si hay imagen, eliminamos el icono para evitar superposición
+      child: Icon(
+        isUser ? Icons.person : Icons.smart_toy,
+        size: 18,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
     );
   }
 }
