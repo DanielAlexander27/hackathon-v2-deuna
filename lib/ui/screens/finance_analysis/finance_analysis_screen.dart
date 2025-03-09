@@ -29,92 +29,190 @@ class FinanceAnalysisScreen extends ConsumerWidget {
           child: Column(
             children: [
               Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Ingresos',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 4,
-                spreadRadius: 2,
-              ),
-            ],
-                ),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Ingresos por fuente',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ingresos',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Ingresos por fuente',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          StatusEarnings(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Ingresos por Fecha',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                FilterFecha2(),
+                                // BarChartEarnings(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(height: 8),
-              StatusEarnings(),
-            ],
-                ),
-              )
-            ],
-          ),
               ),
               Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Egresos',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 4,
-                spreadRadius: 2,
-              ),
-            ],
-                ),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Egresos por categoría de consumo',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 8),
-              StatusConsume(),
-            ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Egresos',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Egresos por categoría de consumo',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          StatusConsume(),                  Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Consumos por Fecha',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                FilterFecha(),
+                                // BarChartConsume()
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-              ),
-            ],
-          ),
         ),
-        ),
-      );
+      ),
+    );
   }
 }
+
+class FilterFecha extends ConsumerWidget {
+  const FilterFecha({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Text('Filtrar por fecha:'),
+          SizedBox(width: 8),
+          ElevatedButton(
+            onPressed: () async {
+              DateTimeRange? picked = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2020),
+                lastDate: DateTime.now(),
+              );
+              if (picked != null) {
+                ref.read(dateRangeProvider.notifier).state = picked;
+              }
+            },
+            child: Text('Seleccionar rango de fechas'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class ConsumeData {
+  final String category;
+  final double amount;
+  final String date;
+
+  ConsumeData({
+    required this.category,
+    required this.amount,
+    required this.date,
+  });
+
+  factory ConsumeData.fromJson(Map<String, dynamic> json) {
+    return ConsumeData(
+      category: json['categoría'],
+      amount: json['monto'].toDouble(),
+      date: json['fecha'],
+    );
+  }
+}
+
+final userDataConsumeProvider = FutureProvider<List<ConsumeData>>((ref) async {
+  final String response = await rootBundle.loadString(
+    'lib/assets/userDataConsume.json',
+  );
+  final List<dynamic> data = json.decode(response);
+  return data.map((json) => ConsumeData.fromJson(json)).toList();
+});
 
 class StatusConsume extends ConsumerWidget {
   const StatusConsume({Key? key}) : super(key: key);
@@ -244,28 +342,6 @@ class StatusConsume extends ConsumerWidget {
         (amount * 137.5) %
         360; // Use golden angle approximation for color distribution
     return HSVColor.fromAHSV(1.0, hue, 0.6, 0.9).toColor();
-  }
-}
-
-final userDataConsumeProvider = FutureProvider<List<ConsumeData>>((ref) async {
-  final String response = await rootBundle.loadString(
-    'lib/assets/userDataConsume.json',
-  );
-  final List<dynamic> data = json.decode(response);
-  return data.map((json) => ConsumeData.fromJson(json)).toList();
-});
-
-class ConsumeData {
-  final String category;
-  final double amount;
-
-  ConsumeData({required this.category, required this.amount});
-
-  factory ConsumeData.fromJson(Map<String, dynamic> json) {
-    return ConsumeData(
-      category: json['categoría'],
-      amount: json['monto'].toDouble(),
-    );
   }
 }
 
@@ -410,16 +486,199 @@ final userDataEarningsProvider = FutureProvider<List<EarningsData>>((
   return data.map((json) => EarningsData.fromJson(json)).toList();
 });
 
+
+
+final dateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
+
+class BarChartConsume extends ConsumerWidget {
+  const BarChartConsume({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(userDataConsumeProvider);
+    final dateRange = ref.watch(dateRangeProvider);
+
+    return data.when(
+      data: (consumeData) {
+        final filteredData = _filterDataByDate(consumeData, dateRange);
+        final barChartData = _generateBarChartData(filteredData);
+
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: AspectRatio(
+            aspectRatio: 1.3,
+            child: BarChart(
+              BarChartData(
+                barGroups: barChartData,
+                borderData: FlBorderData(show: false),
+                titlesData: FlTitlesData(
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: true),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: true),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (error, stack) => Text('Error: $error'),
+    );
+  }
+
+  List<ConsumeData> _filterDataByDate(
+    List<ConsumeData> data,
+    DateTimeRange? dateRange,
+  ) {
+    if (dateRange == null) return data;
+    return data.where((item) {
+      final date = DateTime.parse(item.date);
+      return date.isAfter(dateRange.start) && date.isBefore(dateRange.end);
+    }).toList();
+  }
+
+  List<BarChartGroupData> _generateBarChartData(List<ConsumeData> data) {
+    final Map<String, double> groupedData = {};
+    for (var item in data) {
+      if (groupedData.containsKey(item.date)) {
+        groupedData[item.date] = groupedData[item.date]! + item.amount;
+      } else {
+        groupedData[item.date] = item.amount;
+      }
+    }
+
+    return groupedData.entries.map((entry) {
+      return BarChartGroupData(
+        x: DateTime.parse(entry.key).millisecondsSinceEpoch,
+        barRods: [
+          BarChartRodData(fromY: 0, toY: entry.value, color: Colors.blue),
+        ],
+      );
+    }).toList();
+  }
+}
+class FilterFecha2 extends ConsumerWidget {
+  const FilterFecha2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Text('Filtrar por fecha:'),
+          SizedBox(width: 8),
+          ElevatedButton(
+            onPressed: () async {
+              DateTimeRange? picked = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2020),
+                lastDate: DateTime.now(),
+              );
+              if (picked != null) {
+                ref.read(dateRangeProvider2.notifier).state = picked;
+              }
+            },
+            child: Text('Seleccionar rango de fechas'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+final dateRangeProvider2 = StateProvider<DateTimeRange?>((ref) => null);
+
+class BarChartEarnings extends ConsumerWidget {
+  const BarChartEarnings({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(userDataEarningsProvider);
+    final dateRange = ref.watch(dateRangeProvider2);
+
+    return data.when(
+      data: (earningData) {
+        final filteredData = _filterDataByDate(earningData, dateRange);
+        final barChartData = _generateBarChartData(filteredData);
+
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: AspectRatio(
+            aspectRatio: 1.3,
+            child: BarChart(
+              BarChartData(
+                barGroups: barChartData,
+                borderData: FlBorderData(show: false),
+                titlesData: FlTitlesData(
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: true),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: true),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (error, stack) => Text('Error: $error'),
+    );
+  }
+
+  List<EarningsData> _filterDataByDate(
+    List<EarningsData> data,
+    DateTimeRange? dateRange,
+  ) {
+    if (dateRange == null) return data;
+    return data.where((item) {
+      final date = DateTime.parse(item.date);
+      return date.isAfter(dateRange.start) && date.isBefore(dateRange.end);
+    }).toList();
+  }
+
+  List<BarChartGroupData> _generateBarChartData(List<EarningsData> data) {
+    final Map<String, double> groupedData = {};
+    for (var item in data) {
+      if (groupedData.containsKey(item.date)) {
+        groupedData[item.date] = groupedData[item.date]! + item.amount;
+      } else {
+        groupedData[item.date] = item.amount;
+      }
+    }
+
+    return groupedData.entries.map((entry) {
+      return BarChartGroupData(
+        x: DateTime.parse(entry.key).millisecondsSinceEpoch,
+        barRods: [
+          BarChartRodData(fromY: 0, toY: entry.value, color: Colors.blue),
+        ],
+      );
+    }).toList();
+  }
+}
+
 class EarningsData {
   final String category;
   final double amount;
+  final String date;
 
-  EarningsData({required this.category, required this.amount});
+  EarningsData({
+    required this.category,
+    required this.amount,
+    required this.date,
+  });
 
   factory EarningsData.fromJson(Map<String, dynamic> json) {
     return EarningsData(
       category: json['fuente'],
       amount: json['monto'].toDouble(),
+      date: json['fecha'],
     );
   }
 }
